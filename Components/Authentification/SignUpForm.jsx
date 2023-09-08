@@ -1,4 +1,5 @@
 "use client"
+import styles from "./form.module.css";
 import React, { useState } from 'react'
 
 export default function signupform() {
@@ -14,13 +15,14 @@ export default function signupform() {
     };
   return (
   <div>
-      <form method="POST" action="">
+      <form className={styles.formstyle} method="POST" action="">
         <input
           type="text"
           name="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          className={styles.inputstyle}
         /><br />
         <input
           type="email"
@@ -28,6 +30,7 @@ export default function signupform() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
+          className={styles.inputstyle}
         /><br />
           <input
           type="phone"
@@ -35,6 +38,7 @@ export default function signupform() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Phone Number"
+          className={styles.inputstyle}
         /><br />
          <input
           type="password"
@@ -42,6 +46,7 @@ export default function signupform() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          className={styles.inputstyle}
         /><br />
          <input
           type="password"
@@ -49,12 +54,13 @@ export default function signupform() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Confirm Password"
+          className={styles.inputstyle}
         /><br />
         <input
           type="submit"
-          value="Login"
+          value="Sign Up"
           onClick={submitForm}
-          className="login-button"
+          className={styles.subbutton}
         />
       </form>
     </div>

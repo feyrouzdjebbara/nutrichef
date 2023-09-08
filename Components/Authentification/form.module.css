@@ -1,0 +1,28 @@
+
+    .formstyle {
+      display: flex;
+      flex-direction: column;
+    }
+    .inputstyle {
+  border: none; 
+  border-bottom: 2px solid #D2B48C; 
+  background: transparent; 
+  outline: none; 
+  padding: 5px; 
+  width: 100%;
+  margin-bottom: 10px; 
+  
+}
+.subbutton{
+  padding: 10px;
+  background-color: #D2B48C; 
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.subbutton:hover {
+  background-color: #a78150;
+}
+  

@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react'
+import styles from "./form.module.css";
 
 export default function Login() {
 
@@ -12,7 +13,7 @@ export default function Login() {
     };
   return (
   <div>
-      <form method="POST" action="">
+      <form className={styles.formstyle} method="POST" action="">
      
         <input
           type="text"
@@ -20,6 +21,7 @@ export default function Login() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          className={styles.inputstyle}
         /><br />
         <input
           type="password"
@@ -27,12 +29,13 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          className={styles.inputstyle}
         /><br />
         <input
           type="submit"
           value="Login"
           onClick={submitForm}
-          className="login-button"
+          className={styles.subbutton}
         />
       </form>
     </div>
