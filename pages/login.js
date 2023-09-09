@@ -21,7 +21,7 @@ export default function Login() {
     <>
      <div className={styles.home}>
     <Link  href="/">
-    <img src="/img/back.png" alt="Home" className={styles.image} />
+    <img src="/img/back.png" alt="Home" />
     </Link>
     </div>
      <div className={styles.container}>
