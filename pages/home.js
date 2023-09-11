@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
@@ -7,7 +7,11 @@ export default function Home() {
       <header className={styles.header}>
     
         <div className={styles.count}>
-          <div className={styles.periodcount}></div>
+          <div className={styles.periodcount}> 
+            <select className={styles.periodselect}>
+              <option selected="" value="this">This Mounth</option>
+            </select>
+          </div>
           <div className={styles.containerexin}>
               <div className={styles.expencescount}></div>
               <div className={styles.incomecount}></div>

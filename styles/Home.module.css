@@ -39,6 +39,10 @@
   border-bottom: 1px solid #dadada;
   border-radius: 10px 10px 0 0;
 }
+.periodcount select{
+  background-color:  #ffffff;
+  border: none;
+}
 .containerexin{
   display: flex;
   flex-direction: column;
