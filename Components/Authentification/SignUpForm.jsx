@@ -1,27 +1,72 @@
-"use client"
-import styles from "../../styles/form.module.css";
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import styles from '../../styles/form.module.css';
+import axios from 'axios';
 
-export default function signupform() {
+export default function SignupForm() {
+  const [firstName, setFirstName] = useState('');
+  const [lasrName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordsMatch, setPasswordsMatch] = useState(true); 
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    
-    const submitForm = (e) => {
-      e.preventDefault();
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+   
+    if (password !== confirmPassword) {
+      setPasswordsMatch(false);
+      return; 
+    }
+
+    try {
      
-    };
+      const userData = {
+        firstName: firstName,
+        lastName: lasrName,
+        email: email,
+        phone: phone,
+        password: password,
+        confirmPassword: confirmPassword,
+      };
+
+    
+      const response = await axios.post('http://localhost:3333/auth/signup', userData);
+
+     
+      console.log('Response from the API:', response.data);
+
+     
+      setUsername('');
+      setEmail('');
+      setPhone('');
+      setPassword('');
+      setConfirmPassword('');
+      setPasswordsMatch(true); 
+    } catch (error) {
+     
+      console.error('Error:', error);
+    }
+  };
+
   return (
-  <div>
-      <form className={styles.formstyle} method="POST" action="">
-        <input
+    <div>
+      <form className={styles.formstyle} onSubmit={submitForm}>
+      <input
           type="text"
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
+          name="firstName"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          placeholder="First Name"
+          className={styles.inputstyle}
+        /><br />
+         <input
+          type="text"
+          name="lasrName"
+          value={lasrName}
+          onChange={(e) => setLastName(e.target.value)}
+          placeholder="Last Name"
           className={styles.inputstyle}
         /><br />
         <input
@@ -32,15 +77,15 @@ export default function signupform() {
           placeholder="Email"
           className={styles.inputstyle}
         /><br />
-          <input
-          type="phone"
+        <input
+          type="text"
           name="phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder="Phone Number"
+          placeholder="Phone"
           className={styles.inputstyle}
-        /><br />
-         <input
+          /><br />
+        <input
           type="password"
           name="password"
           value={password}
@@ -48,21 +93,24 @@ export default function signupform() {
           placeholder="Password"
           className={styles.inputstyle}
         /><br />
-         <input
+        <input
           type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
           className={styles.inputstyle}
         /><br />
+        
+        
+        {!passwordsMatch && <p className={styles.errormessage}> Passwords do not match.</p>}
+
         <input
           type="submit"
           value="Sign Up"
-          onClick={submitForm}
           className={styles.subbutton}
         />
       </form>
     </div>
-  )
+  );
 }

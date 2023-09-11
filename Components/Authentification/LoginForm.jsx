@@ -1,26 +1,38 @@
-"use client"
-import React, { useState } from 'react'
-import styles from "../../styles/form.module.css";
+import React, { useState } from 'react';
+import styles from '../../styles/form.module.css';
+import axios from 'axios'; 
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    
-    const submitForm = (e) => {
-      e.preventDefault();
+  const submitForm = async (e) => { 
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:3333/auth/login', {
+        email: email,
+        password: password,
+      });
+
      
-    };
+      console.log('Response  :', response.data);
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.error('Erreur  :', error);
+    }
+  };
+
   return (
-  <div>
-      <form className={styles.formstyle} method="POST" action="">
-     
+    <div>
+      <form className={styles.formstyle} method="POST" >
         <input
-          type="text"
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
           className={styles.inputstyle}
         /><br />
         <input
@@ -39,5 +51,5 @@ export default function Login() {
         />
       </form>
     </div>
-  )
+  );
 }
