@@ -93,7 +93,7 @@ export default function AddExpense() {
     <>
     
     <div className={styles.home}>
-    <Link  href="/my-expenses">
+    <Link  href="/Expenses/my-expenses">
     <img src="/img/back.png" alt="Home" />
     </Link>
     </div>
