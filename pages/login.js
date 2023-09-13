@@ -37,7 +37,7 @@ export default function Login() {
      if(response.status === 201){
      const jwtToken = response.data.token;
       localStorage.setItem('OursiteJWT', jwtToken);
-      router.push('/home'); 
+      router.push('/Expenses/my-expenses'); 
      }
 
 

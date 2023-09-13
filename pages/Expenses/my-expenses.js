@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/expenses.module.css";
 import { useRouter } from 'next/router';
 import { useEffect } from "react"; 
 import jwt from 'jsonwebtoken'; 
@@ -9,12 +9,15 @@ export default function Home() {
   useEffect(() => {
     const jwtToken = localStorage.getItem('OursiteJWT'); 
     const decodedToken = jwt.decode(jwtToken);
-   
+   console.log(decodedToken)
     if (!jwtToken) {
       router.push('/login');
     } else {
 
-      console.log(decodedToken);
+
+     
+      
+
     }
   }, [router]);
 
@@ -30,8 +33,8 @@ export default function Home() {
         <div className={styles.count}>
           <div className={styles.periodcount}> 
           <select className={styles.periodselect} value="thisMonth">
-               <option value="thisMonth">This Month</option>
-               <option value="thisYear">This Month</option>
+            <option value="thisMonth">This Month</option>
+            <option value="thisYear">This Year</option> 
           </select>
           </div>
           <div className={styles.containerexin}>
@@ -45,16 +48,24 @@ export default function Home() {
       <main className={styles.main}>
       
       <h1>Welcome,!</h1>
-
+      <Link href="/Expenses/add-expense">
+        <button className={styles.addExpensesButton}>+</button>
+      </Link>
 
       </main>
 
       <footer className={styles.footer}>
           <Link href="/">
-          <button>Home</button>
+          <button>Expenses</button>
         </Link>
-        <Link href="/about">
+        <Link href="/income">
+          <button>Income</button>
+        </Link>
+        <Link href="/chart">
           <button>Chart</button>
+        </Link> 
+        <Link href="/about">
+          <button>About</button>
         </Link> 
      
       </footer>
