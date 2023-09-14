@@ -11,32 +11,20 @@ export default function AddExpense() {
     const [expenseData, setExpenseData] = useState({
         title: '',
         category: '',
-        amount: 0,
-        date: new Date().toISOString().split('.')[0] + "Z",
+        amount: '',
+        date: new Date().toISOString().split('.')[0],
         description: '',
       });
      
       const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'date') {
-            
-            const [date, time] = value.split('T');
-            const [year, month, day] = date.split('-');
-            const [hour, minute] = time.split(':');
         
-            
-            const isoDate = `${year}-${month}-${day}T${hour}:${minute}:00.000Z`;
-        
-            setExpenseData({
-              ...expenseData,
-              date: isoDate,
-            });
-          } else {
+         
             setExpenseData({
               ...expenseData,
               [name]: name === 'amount' ? parseFloat(value) : value,
             });
-          }
+          
         };
       
 
@@ -47,7 +35,7 @@ export default function AddExpense() {
           const Expense= {
             title: expenseData.title,
             amount: expenseData.amount,
-           // date: expenseData.date,
+            date: expenseData.date,
             category: expenseData.category,
             description: expenseData.description,
           };
@@ -149,10 +137,10 @@ export default function AddExpense() {
           />
        <br/>
        <input
-            type="datetime-local"
+            type="date"
             id="date"
             name="date"
-            value={expenseData.date.split('.')[0]} 
+            value={expenseData.date} 
             onChange={handleChange}
             className={styles.inputstyle}
             placeholder="Date"
