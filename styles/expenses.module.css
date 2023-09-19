@@ -43,35 +43,23 @@
   background-color:  #ffffff;
   border: none;
 }
-.containerexin{
+.containerexin {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(240, 0, 0);
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px; 
+  font-family: sans-serif; 
   
 }
-.expencescount {
-  
-  width: 50%;
-  height: 80%;
-  background-color: #d00000;
- 
-  border-radius: 0 0  0 10px;
- 
-}
-
-.incomecount {
-  width: 50%;
-  height: 80%;
-  background-color: #12c72a;
-  
-  border-radius: 0 0 10px 0 ;
-  
- 
-}
-
 
 .main {
-  text-align: center;
-  padding: 2rem;
+ 
+  justify-content: center;
+  align-items: center;
 }
 .addExpensesButton {
   position: fixed;
@@ -114,4 +102,88 @@
   background-color: #a78150;
   
 }
+.expenseList {
+  list-style: none;
+  padding: 0;
+ 
+
+  
+}
+.expenses{
+margin-top: 120px;
+margin-bottom: 50px;
+}
+.expenseItem {
+  
+  border: 1px solid #ab8b61;
+ 
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 300px; 
+  display: flex;
+  flex-direction: column;
+  margin-right: 42px;
+  margin-top: 20px;
+  
+   
+  
+}
+
+
+.expenseTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expenseTitle {
+  font-weight: bold;
+  color:#a78150
+}
+
+.expenseDate {
+  font-size: 0.85rem;
+  color:#a78150
+}
+
+.expenseBottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.expenseLeft {
+  flex: 1;
+  text-align: left;
+}
+
+.expenseRight {
+  flex: 1;
+  text-align: right;
+}
+.delete{
+  color: #fff;
+  flex: 1; 
+  width:40%;
+  height: 100%;
+  padding: 0.5rem 1rem; 
+  background-color:  #ab8b61;
+  border: none;
+  border-radius: 10px;
+
+}
+.update{
+  color: #fff;
+  flex: 1; 
+  width:40%;
+  height: 100%;
+  padding: 0.5rem 1rem; 
+  background-color:  #ab8b61;
+  border: none;
+  border-radius: 10px;
+  margin-right: 20%;
+
+}
+
 }
