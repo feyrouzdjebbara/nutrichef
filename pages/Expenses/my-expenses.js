@@ -40,6 +40,7 @@ export default function Home() {
   const handleUpdateExpense = async (updatedExpenseData) => {
    
     const jwtToken = localStorage.getItem('OursiteJWT');
+    const decodedToken = jwt.decode(jwtToken);
     if (!jwtToken) {
       console.error('JWT token is missing or invalid');
       return;
@@ -65,6 +66,17 @@ export default function Home() {
         setExpenses(updatedExpenses);
         setIsPopupOpen(false);
         setSelectedExpense(null);
+        axios
+        .get(`http://localhost:3333/expenses/sum/${decodedToken.id}`, {
+          headers: headers,
+        })
+        .then((response) => {
+          setExpensesSum(response.data);
+        })
+        .catch((error) => {
+          console.error('Error fetching expenses sum:', error);
+        });
+    
       }
     } catch (error) {
       console.error('Error updating expense:', error);
