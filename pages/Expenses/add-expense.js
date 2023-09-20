@@ -108,7 +108,7 @@ export default function AddExpense() {
             name="category"
             value={expenseData.category}
             onChange={handleChange}
-            className={styles.inputstyle}
+            className={styles.inputstyleselect}
             placeholder="Select a category"
             required
           >

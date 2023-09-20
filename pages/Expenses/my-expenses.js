@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect ,useState} from "react"; 
 import jwt from 'jsonwebtoken'; 
 import axios from 'axios';
-
+import UpdateExpensePopup from "../../Components/UpdateExpensePopup";
 
 export default function Home() {
   const router = useRouter();
@@ -15,6 +15,18 @@ export default function Home() {
    const [TotalYearExpenses, setTotalYearExpenses] = useState(0);
    const [selectedExpense, setSelectedExpense] = useState(null);
    const [selectedOption, setSelectedOption] = useState('totalExpenses');
+   const [isPopupOpen, setIsPopupOpen] = useState(false);
+   const [SelectedExpenseUpdate, setSelectedExpenseUpdate] =useState(null);
+
+  const handleUpdateClick = (expense) => {
+    setSelectedExpenseUpdate(expense);
+    setIsPopupOpen(true); 
+  };
+
+  const handleClosePopup = () => {
+    setSelectedExpense(null);
+    setIsPopupOpen(false); 
+  };
 
    const handleExpenseClick = (expenseId) => {
     setSelectedExpense(expenseId);
@@ -23,45 +35,87 @@ export default function Home() {
     setSelectedOption(e.target.value);
   };
 
+
+
+  const handleUpdateExpense = async (updatedExpenseData) => {
+   
+    const jwtToken = localStorage.getItem('OursiteJWT');
+    if (!jwtToken) {
+      console.error('JWT token is missing or invalid');
+      return;
+    }
+   const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    try {
+      const response = await axios.patch(
+        `http://localhost:3333/expenses/${SelectedExpenseUpdate._id}`,
+        updatedExpenseData,
+        { headers }
+      );
+  
+      if (response.status === 200) {
+        console.log('Expense updated successfully:', response.data);
+        
+        const updatedExpenses = expenses.map((expense) =>
+          expense._id === selectedExpense ? response.data : expense
+        );
+
+        setExpenses(updatedExpenses);
+        setIsPopupOpen(false);
+        setSelectedExpense(null);
+      }
+    } catch (error) {
+      console.error('Error updating expense:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data); // Log the response data if available
+      }
+    }
+  };
+
+
   const handleDeleteClick = (expenseId) => {
+   
+    const isConfirmed = window.confirm('Are you sure you want to delete this expense?');
+  
+    if (!isConfirmed) {
+      return; 
+    }
+  
     const deleteEndpoint = `http://localhost:3333/expenses/${expenseId}`;
     const jwtToken = localStorage.getItem('OursiteJWT');
     const decodedToken = jwt.decode(jwtToken);
     const headers = {
       Authorization: `Bearer ${jwtToken}`,
     };
-    
+  
     axios
-    .delete(deleteEndpoint, { headers })
-    .then((response) => {
-      console.log('Expense deleted successfully:', response.data);
-
-      axios
-      .get(`http://localhost:3333/expenses/sum/${decodedToken.id}`, {
-        headers: headers,
-      })
+      .delete(deleteEndpoint, { headers })
       .then((response) => {
-        setExpensesSum(response.data);
+        console.log('Expense deleted successfully:', response.data);
+  
+        axios
+          .get(`http://localhost:3333/expenses/sum/${decodedToken.id}`, {
+            headers: headers,
+          })
+          .then((response) => {
+            setExpensesSum(response.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching expenses sum:', error);
+          });
+  
+        setExpenses((prevExpenses) =>
+          prevExpenses.filter((expense) => expense._id !== expenseId)
+        );
       })
       .catch((error) => {
-        console.error('Error fetching expenses sum:', error);
+        console.error('Error deleting expense:', error);
       });
-      setExpenses((prevExpenses) =>
-        prevExpenses.filter((expense) => expense._id !== expenseId)
-      );
-    })
-    .catch((error) => {
-     
-      console.error('Error deleting expense:', error);
-    });
   };
   
-  const handleUpdateClick = (expenseId) => {
-    
-    router.push("/update-expense");
-  };
   
-
 
    useEffect(() => {
     const jwtToken = localStorage.getItem('OursiteJWT');
@@ -162,6 +216,21 @@ export default function Home() {
         <button className={styles.addExpensesButton}>+</button>
       </Link>
 <div className={styles.expenses} >
+
+    
+      {isPopupOpen && (
+       
+        <div className={styles.popup} >
+              
+              <UpdateExpensePopup
+              expense={SelectedExpenseUpdate}
+              onUpdate={handleUpdateExpense}
+              onClose={handleClosePopup}
+           />
+              </div>
+         )}
+      
+
       <ul className={styles.expenselist}>
           {expenses.map((expense) => (
           
@@ -192,12 +261,14 @@ export default function Home() {
                   <button  className={styles.update} onClick={() => handleUpdateClick(expense)}>Update</button>
                   <button className={styles.delete} onClick={() => handleDeleteClick(expense._id)}>Delete</button>
                 </div>
+                
               )}
             </li>
           ))}
         </ul>
-
+     
 </div>
+
       </main>
 
       <footer className={styles.footer}>

@@ -76,6 +76,7 @@
   height: 40px;
   font-size: 24px; 
   cursor: pointer;
+  z-index: 10;
 }
 
 .addExpensesButton:hover {
@@ -110,6 +111,7 @@
   
 }
 .expenses{
+position: relative;
 margin-top: 120px;
 margin-bottom: 50px;
 }
@@ -168,7 +170,7 @@ margin-bottom: 50px;
   width:40%;
   height: 100%;
   padding: 0.5rem 1rem; 
-  background-color:  #ab8b61;
+  background-color:  #e60000;
   border: none;
   border-radius: 10px;
 
@@ -185,5 +187,23 @@ margin-bottom: 50px;
   margin-right: 20%;
 
 }
+.popup {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.915);
+  display: flex;
 
+  justify-content: center;
+  align-items: center;
+  z-index: 999; 
+  height: 55%;
+  flex-direction: column;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
 }
