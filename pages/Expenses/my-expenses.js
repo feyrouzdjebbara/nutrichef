@@ -76,7 +76,29 @@ export default function Home() {
         .catch((error) => {
           console.error('Error fetching expenses sum:', error);
         });
-    
+        axios
+        .get(`http://localhost:3333/expenses/current-month/${decodedToken.id}`, {
+          headers: headers,})
+          .then((response) => {
+            setExpensesMonth(response.data);
+           
+          })
+          axios
+          .get(`http://localhost:3333/expenses/year/${decodedToken.id}`, {
+            headers: headers,
+          })
+          .then((response) => {
+            const expensesYearData = response.data;
+            const totalYearExpenses = Object.values(expensesYearData).reduce(
+              (total, monthExpense) => total + monthExpense,
+              0
+            );
+            setExpensesYear(expensesYearData);
+            setTotalYearExpenses(totalYearExpenses); 
+          })
+          .catch((error) => {
+            console.error('Error fetching yearly expenses:', error);
+          });
       }
     } catch (error) {
       console.error('Error updating expense:', error);
@@ -117,7 +139,29 @@ export default function Home() {
           .catch((error) => {
             console.error('Error fetching expenses sum:', error);
           });
-  
+          axios
+          .get(`http://localhost:3333/expenses/current-month/${decodedToken.id}`, {
+            headers: headers,})
+            .then((response) => {
+              setExpensesMonth(response.data);
+             
+            })
+            axios
+            .get(`http://localhost:3333/expenses/year/${decodedToken.id}`, {
+              headers: headers,
+            })
+            .then((response) => {
+              const expensesYearData = response.data;
+              const totalYearExpenses = Object.values(expensesYearData).reduce(
+                (total, monthExpense) => total + monthExpense,
+                0
+              );
+              setExpensesYear(expensesYearData);
+              setTotalYearExpenses(totalYearExpenses); 
+            })
+            .catch((error) => {
+              console.error('Error fetching yearly expenses:', error);
+            });
         setExpenses((prevExpenses) =>
           prevExpenses.filter((expense) => expense._id !== expenseId)
         );
