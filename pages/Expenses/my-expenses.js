@@ -37,6 +37,57 @@ export default function Home() {
 
 
 
+
+
+
+  
+      const fetchAndUpdateExpensesData = (jwtToken, decodedToken) => {
+        const headers = {
+          Authorization: `Bearer ${jwtToken}`,
+        };
+        axios
+          .get(`http://localhost:3333/expenses/sum/${decodedToken.id}`, {
+            headers: headers,
+          })
+          .then((response) => {
+            setExpensesSum(response.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching expenses sum:', error);
+          });
+        axios
+          .get(`http://localhost:3333/expenses/current-month/${decodedToken.id}`, {
+            headers: headers,
+          })
+          .then((response) => {
+            setExpensesMonth(response.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching current month expenses:', error);
+          });
+        axios
+          .get(`http://localhost:3333/expenses/year/${decodedToken.id}`, {
+            headers: headers,
+          })
+          .then((response) => {
+            const expensesYearData = response.data;
+            const totalYearExpenses = Object.values(expensesYearData).reduce(
+              (total, monthExpense) => total + monthExpense,
+              0
+            );
+            setExpensesYear(expensesYearData);
+            setTotalYearExpenses(totalYearExpenses);
+          })
+          .catch((error) => {
+            console.error('Error fetching yearly expenses:', error);
+          });
+      };
+
+
+
+
+
+
   const handleUpdateExpense = async (updatedExpenseData) => {
    
     const jwtToken = localStorage.getItem('OursiteJWT');
@@ -66,57 +117,27 @@ export default function Home() {
         setExpenses(updatedExpenses);
         setIsPopupOpen(false);
         setSelectedExpense(null);
-        axios
-        .get(`http://localhost:3333/expenses/sum/${decodedToken.id}`, {
-          headers: headers,
-        })
-        .then((response) => {
-          setExpensesSum(response.data);
-        })
-        .catch((error) => {
-          console.error('Error fetching expenses sum:', error);
-        });
-        axios
-        .get(`http://localhost:3333/expenses/current-month/${decodedToken.id}`, {
-          headers: headers,})
-          .then((response) => {
-            setExpensesMonth(response.data);
-           
-          })
-          axios
-          .get(`http://localhost:3333/expenses/year/${decodedToken.id}`, {
-            headers: headers,
-          })
-          .then((response) => {
-            const expensesYearData = response.data;
-            const totalYearExpenses = Object.values(expensesYearData).reduce(
-              (total, monthExpense) => total + monthExpense,
-              0
-            );
-            setExpensesYear(expensesYearData);
-            setTotalYearExpenses(totalYearExpenses); 
-          })
-          .catch((error) => {
-            console.error('Error fetching yearly expenses:', error);
-          });
+        fetchAndUpdateExpensesData(jwtToken, decodedToken);
       }
     } catch (error) {
       console.error('Error updating expense:', error);
       if (error.response) {
-        console.error('Response data:', error.response.data); // Log the response data if available
+        console.error('Response data:', error.response.data); 
       }
     }
   };
 
 
+
+
+
+
   const handleDeleteClick = (expenseId) => {
-   
     const isConfirmed = window.confirm('Are you sure you want to delete this expense?');
   
     if (!isConfirmed) {
       return; 
     }
-  
     const deleteEndpoint = `http://localhost:3333/expenses/${expenseId}`;
     const jwtToken = localStorage.getItem('OursiteJWT');
     const decodedToken = jwt.decode(jwtToken);
@@ -128,40 +149,7 @@ export default function Home() {
       .delete(deleteEndpoint, { headers })
       .then((response) => {
         console.log('Expense deleted successfully:', response.data);
-  
-        axios
-          .get(`http://localhost:3333/expenses/sum/${decodedToken.id}`, {
-            headers: headers,
-          })
-          .then((response) => {
-            setExpensesSum(response.data);
-          })
-          .catch((error) => {
-            console.error('Error fetching expenses sum:', error);
-          });
-          axios
-          .get(`http://localhost:3333/expenses/current-month/${decodedToken.id}`, {
-            headers: headers,})
-            .then((response) => {
-              setExpensesMonth(response.data);
-             
-            })
-            axios
-            .get(`http://localhost:3333/expenses/year/${decodedToken.id}`, {
-              headers: headers,
-            })
-            .then((response) => {
-              const expensesYearData = response.data;
-              const totalYearExpenses = Object.values(expensesYearData).reduce(
-                (total, monthExpense) => total + monthExpense,
-                0
-              );
-              setExpensesYear(expensesYearData);
-              setTotalYearExpenses(totalYearExpenses); 
-            })
-            .catch((error) => {
-              console.error('Error fetching yearly expenses:', error);
-            });
+        fetchAndUpdateExpensesData(jwtToken, decodedToken);
         setExpenses((prevExpenses) =>
           prevExpenses.filter((expense) => expense._id !== expenseId)
         );
@@ -172,6 +160,11 @@ export default function Home() {
   };
   
   
+
+
+
+
+
 
    useEffect(() => {
     const jwtToken = localStorage.getItem('OursiteJWT');
@@ -195,42 +188,15 @@ export default function Home() {
           console.error('Error fetching expenses:', error);
         });
 
-        axios
-        .get(`http://localhost:3333/expenses/sum/${decodedToken.id}`, {
-          headers: headers,})
-          .then((response) => {
-            setExpensesSum(response.data);
-           
-          })
-          .catch((error) => {
-            console.error('Error fetching expenses sum:', error);
-          });
-
-          axios
-        .get(`http://localhost:3333/expenses/current-month/${decodedToken.id}`, {
-          headers: headers,})
-          .then((response) => {
-            setExpensesMonth(response.data);
-           
-          })
-          axios
-          .get(`http://localhost:3333/expenses/year/${decodedToken.id}`, {
-            headers: headers,
-          })
-          .then((response) => {
-            const expensesYearData = response.data;
-            const totalYearExpenses = Object.values(expensesYearData).reduce(
-              (total, monthExpense) => total + monthExpense,
-              0
-            );
-            setExpensesYear(expensesYearData);
-            setTotalYearExpenses(totalYearExpenses); 
-          })
-          .catch((error) => {
-            console.error('Error fetching yearly expenses:', error);
-          });
+        fetchAndUpdateExpensesData(jwtToken, decodedToken);
     }
   }, [router]);
+
+
+
+
+
+
 
 
 
