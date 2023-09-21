@@ -5,6 +5,7 @@ import { useEffect ,useState} from "react";
 import jwt from 'jsonwebtoken'; 
 import axios from 'axios';
 import UpdateExpensePopup from "../../Components/UpdateExpensePopup";
+import ExpenseFilter from "../../Components/ExpenseFilter";
 
 export default function Home() {
   const router = useRouter();
@@ -17,6 +18,9 @@ export default function Home() {
    const [selectedOption, setSelectedOption] = useState('totalExpenses');
    const [isPopupOpen, setIsPopupOpen] = useState(false);
    const [SelectedExpenseUpdate, setSelectedExpenseUpdate] =useState(null);
+   const [filteredExpenses, setFilteredExpenses] = useState(expenses);
+    const [expensetitleFilter, setExpensetitleFilter] = useState('');
+
 
   const handleUpdateClick = (expense) => {
     setSelectedExpenseUpdate(expense);
@@ -40,7 +44,7 @@ export default function Home() {
 
 
 
-  
+
       const fetchAndUpdateExpensesData = (jwtToken, decodedToken) => {
         const headers = {
           Authorization: `Bearer ${jwtToken}`,
@@ -115,6 +119,8 @@ export default function Home() {
         );
 
         setExpenses(updatedExpenses);
+        setFilteredExpenses(updatedExpenses);
+  
         setIsPopupOpen(false);
         setSelectedExpense(null);
         fetchAndUpdateExpensesData(jwtToken, decodedToken);
@@ -183,6 +189,7 @@ export default function Home() {
         })
         .then((response) => {
           setExpenses(response.data);
+          setFilteredExpenses(response.data); 
         })
         .catch((error) => {
           console.error('Error fetching expenses:', error);
@@ -193,13 +200,51 @@ export default function Home() {
   }, [router]);
 
 
+  const fetchExpensesBytitle = async (title) => {
+   
+      try {
+        const authToken = localStorage.getItem('OursiteJWT');
+        const headers = {
+          Authorization: `Bearer ${authToken}`,
+        };
+  
+         const searchTerm = title.toLowerCase();
+  
+        const response = await axios.get(
+          `http://localhost:3333/expenses?keyword=${searchTerm}`,
+          { headers }
+        );
+  
+        if (response.status === 200) {
+          return response.data;
+        } else {
+          console.error('Failed to fetch expenses by name:', response.status, response.data);
+          return [];
+        }
+      } catch (error) {
+        console.error('Error fetching expenses by name:', error);
+        return [];
+      }
+  
+  };
+  
 
 
-
-
-
-
-
+  const handleExpenseNameFilterChange = (e) => {
+    setExpensetitleFilter(e.target.value);
+  };
+  
+  const handleFilterExpensesBytitle = async () => {
+    if (expensetitleFilter.trim() === '') {
+  
+      setFilteredExpenses(expenses);
+    } else {
+      const filteredExpenses = await fetchExpensesBytitle(expensetitleFilter);
+      setFilteredExpenses(filteredExpenses);
+    }
+  };
+  
+  console.log('Rendered with filteredExpenses:', filteredExpenses);
   return (
 
 
@@ -232,12 +277,21 @@ export default function Home() {
       </header>
 
       <main className={styles.main}>
-      
-    
+   
+      <ExpenseFilter
+        expenseNameFilter={expensetitleFilter}
+        handleExpenseNameFilterChange={handleExpenseNameFilterChange}
+        handleFilterExpensesBytitle={handleFilterExpensesBytitle}
+      />
+     
+
+
       <Link href="/Expenses/add-expense">
         <button className={styles.addExpensesButton}>+</button>
       </Link>
-<div className={styles.expenses} >
+      <div className={styles.expenses} >
+
+
 
     
       {isPopupOpen && (
@@ -252,9 +306,11 @@ export default function Home() {
               </div>
          )}
       
-
-      <ul className={styles.expenselist}>
-          {expenses.map((expense) => (
+              {filteredExpenses.length === 0 ? (
+                <p className={styles.title}>No expenses found</p>
+                    ) : (
+            <ul className={styles.expenselist}>
+            {filteredExpenses.map((expense) => (
           
             <li key={expense._id} className={styles.expenseItem} onClick={() => handleExpenseClick(expense._id)}>
               <div className={styles.expenseTop}>
@@ -288,10 +344,13 @@ export default function Home() {
             </li>
           ))}
         </ul>
-     
+        )}
 </div>
 
       </main>
+
+
+
 
       <footer className={styles.footer}>
           <Link href="/">
