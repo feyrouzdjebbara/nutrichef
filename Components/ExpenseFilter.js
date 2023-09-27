@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "../styles/filter.module.css";
 
-const ExpenseFilter = ({ expenseNameFilter, handleExpenseNameFilterChange, handleFilterExpensesBytitle}) => {
+const ExpenseFilter = ({ expenseNameFilter, handleExpenseNameFilterChange, handleFilterExpensesBytitle ,categoryFilter, handleFilterCategory}) => {
   return (
     
     <div  className={styles.search}>
@@ -23,6 +23,21 @@ const ExpenseFilter = ({ expenseNameFilter, handleExpenseNameFilterChange, handl
          <i class="fa fa-search"></i>
       </button>
       
+      <select
+      className={styles.category}
+      value={categoryFilter}
+      onChange={(e) => {
+        handleFilterCategory(e.target.value);
+      }}
+    >
+      <option value="">All</option>
+      <option value="Food">Food</option>
+      <option value="Bills">Bills</option>
+      <option value="Travel">Travel</option>
+      <option value="Entertainment">Entertainment</option>
+      <option value="Transportation">Transportation</option>
+      <option value="Other">Other</option>
+    </select>
 </div>
    
 

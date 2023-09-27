@@ -5,7 +5,7 @@
     position: relative;
     align-items: center;
     margin-top: 110px;
-    margin-left: 20px;
+   
   }
 .searchTerm {
   border: 1px solid #ab8b61;
@@ -34,5 +34,19 @@
   .searchButton:hover {
     background-color: #a78150; 
   }
-
+  .category {
+    width: 100px;
+    height: 36px;
+    border: none;
+    background: #ab8b61;
+    text-align: center;
+    color: #fff;
+    border-radius:  5px ;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 2px;
+  }
+    .category:hover {
+      background-color: #a78150; 
+    }
 }

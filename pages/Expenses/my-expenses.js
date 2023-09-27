@@ -20,8 +20,9 @@ export default function Home() {
    const [SelectedExpenseUpdate, setSelectedExpenseUpdate] =useState(null);
    const [filteredExpenses, setFilteredExpenses] = useState(expenses);
     const [expensetitleFilter, setExpensetitleFilter] = useState('');
-
-
+    const [categoryFilter, setCategoryFilter] = useState('');
+    const [CategorySum, setCategorySum] = useState('');
+    
   const handleUpdateClick = (expense) => {
     setSelectedExpenseUpdate(expense);
     setIsPopupOpen(true); 
@@ -200,6 +201,7 @@ export default function Home() {
   }, [router]);
 
 
+  
   const fetchExpensesBytitle = async (title) => {
    
       try {
@@ -219,11 +221,11 @@ export default function Home() {
           return response.data;
         } else {
           console.error('Failed to fetch expenses by name:', response.status, response.data);
-          return [];
+        
         }
       } catch (error) {
         console.error('Error fetching expenses by name:', error);
-        return [];
+        
       }
   
   };
@@ -244,47 +246,105 @@ export default function Home() {
     }
   };
   
-  console.log('Rendered with filteredExpenses:', filteredExpenses);
+  
+
+
+
+
+
+  const handleFilterCategory = async (selectedCategory) => {
+    try {
+      setCategoryFilter(selectedCategory)
+      setCategorySum(0)
+      const authToken = localStorage.getItem('OursiteJWT');
+      const decodedToken = jwt.decode(authToken);
+      const headers = {
+        Authorization: `Bearer ${authToken}`,
+      };
+
+  
+      const response = await axios.get(
+        `http://localhost:3333/expenses/categories/${selectedCategory}/users/${decodedToken.id}`,
+       
+        { headers }
+      );
+  
+      if (response.status === 200) {
+        console.log("total",response.data.totalAmount[0].total)
+        setCategorySum(response.data.totalAmount[0].total)
+        //setFilteredExpenses(response.data.expenses);
+        
+      } else {
+        console.error(
+          'Failed to fetch expenses by category and user:',
+          response.status,
+          response.data
+        );
+      //  setFilteredExpenses([]);
+      }
+    } catch (error) {
+      console.error('Error fetching expenses by category and user:', error);
+     // setFilteredExpenses([]);
+    }
+  };
+  
+  
+  
   return (
 
 
     <div className={styles.container}>
       <header className={styles.header}>
     
-        <div className={styles.count}>
-          <div className={styles.periodcount}> 
-          <select
+      <div className={styles.count}>
+  {categoryFilter.trim() === '' ? (
+    <>
+    <div className={styles.periodcount}>
+            <select
           className={styles.periodselect}
           value={selectedOption}
           onChange={handleSelectChange}
         >
-            <option value="totalExpenses">Total Expenses</option>
-              <option value="thisMonth">This Month</option>
-              <option value="thisYear">This Year</option>
-          </select>
-          </div>
-          <div className={styles.containerexin}>
-        {selectedOption === 'totalExpenses' ? (
-          <p>Total Expenses: {expensesSum} DZD</p>
-        ) : selectedOption === 'thisMonth' ? (
-          <p>This Month Expenses: {expensesMonth} DZD</p>
-        ) : selectedOption === 'thisYear' ? (
-          <p>This Year Expenses: {TotalYearExpenses} DZD</p>
-        ) : null}
-      </div>
-        </div>
+          <option value="totalExpenses">Total Expenses</option>
+          <option value="thisMonth">This Month</option>
+          <option value="thisYear">This Year</option>
+        </select>
+
+    </div>
+    <div className={styles.containerexin}>
+      {selectedOption === 'totalExpenses' ? (
+        <p>Total Expenses: {expensesSum} DZD</p>
+      ) : selectedOption === 'thisMonth' ? (
+        <p>This Month Expenses: {expensesMonth} DZD</p>
+      ) : selectedOption === 'thisYear' ? (
+        <p>This Year Expenses: {TotalYearExpenses} DZD</p>
+      ) : null}
+    </div></>
+  ) : (
+    
+    <div className={styles.containerexin}>
+    
+      <p>The total expense amount for the {categoryFilter}  is : {CategorySum} DZD</p>
+     
+    </div>
+  )}
+</div>
+
         
       </header>
 
       <main className={styles.main}>
    
       <ExpenseFilter
+      
         expenseNameFilter={expensetitleFilter}
         handleExpenseNameFilterChange={handleExpenseNameFilterChange}
         handleFilterExpensesBytitle={handleFilterExpensesBytitle}
+        categoryFilter={categoryFilter}
+        handleFilterCategory={handleFilterCategory}
       />
      
-
+     
 
       <Link href="/Expenses/add-expense">
         <button className={styles.addExpensesButton}>+</button>
