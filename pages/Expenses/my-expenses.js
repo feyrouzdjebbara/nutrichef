@@ -413,7 +413,10 @@ export default function Home() {
 
 
       <footer className={styles.footer}>
-          <Link href="/">
+      <Link href="/Home">
+          <button>Home</button>
+        </Link>
+          <Link href="/Expenses/my-expenses">
           <button>Expenses</button>
         </Link>
         <Link href="/income">

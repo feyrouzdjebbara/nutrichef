@@ -1,0 +1,150 @@
+@media (max-width: 2559px){
+
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .header {
+      background: linear-gradient(to bottom, #ab8b61 60%, #ffffff 40%);
+      height: 15%;
+      color: #fff;
+      padding: 1rem;
+      width: 100%;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
+    
+   
+    
+    .main {
+     margin-top: 130px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 130px;
+    }
+    
+    .footer {
+     
+      width: 100%;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+    }
+    .footer button {
+      color: #fff;
+      flex: 1; 
+      width:20%;
+      height: 100%;
+      padding: 0.5rem 1rem; 
+      background-color:  #ab8b61;
+      border: none;
+    }
+    
+    .footer button:hover {
+      background-color: #a78150;
+      
+    }
+    
+.count {
+ 
+    width: 80%;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .periodcount {
+    width: 100%;
+    height: 30%;
+    border-bottom: 1px solid #dadada;
+    border-radius: 10px 10px 0 0;
+
+  }
+  .periodselect{
+    background-color:  #ffffff;
+    border: none;
+  }
+  
+  .containerTotal{
+    width:100%;
+   
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px; 
+    font-family: sans-serif; 
+    
+    
+   
+  }
+  .containerexin {
+    color: rgb(240, 0, 0);  
+    float: left;  
+   margin-left: 30px;
+  }
+  .containerIncome{
+    color: rgb(0, 165, 36);
+    float: right;
+    margin-right: 30px;
+  }
+  .relativeCircle{
+    width: 300px;
+    padding: 20px;
+    height: 430px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .categoryRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .category {
+    width: 70%;
+    text-align: left;
+    flex: 1;
+    font-size: 12px;
+    font-family:sans-serif; 
+    text-decoration: none; 
+  }
+  
+  .percentage {
+    text-align: right;
+    flex: 1;
+    font-size: 12px;
+    font-family:sans-serif; 
+    text-decoration: none; 
+  }
+  
+  .title{
+    font-size: 14px;
+    font-family:sans-serif; 
+    text-decoration: none; 
+    font-weight: bold;
+    color:#a78150
+  }
+  
+   
+  
+}
