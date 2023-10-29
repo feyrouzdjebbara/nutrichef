@@ -160,6 +160,9 @@ export default function Home() {
         setExpenses((prevExpenses) =>
           prevExpenses.filter((expense) => expense._id !== expenseId)
         );
+        setFilteredExpenses((prevExpenses) =>
+        prevExpenses.filter((expense) => expense._id !== expenseId)
+      );
       })
       .catch((error) => {
         console.error('Error deleting expense:', error);
