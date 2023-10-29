@@ -425,8 +425,8 @@ export default function Home() {
         <Link href="/income">
           <button>Income</button>
         </Link>
-        <Link href="/chart">
-          <button>Chart</button>
+        <Link href="/Calendar">
+          <button>Calendar</button>
         </Link> 
         <Link href="/about">
           <button>About</button>

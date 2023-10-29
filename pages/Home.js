@@ -179,12 +179,7 @@ const categoryColors = [
                     .attr('d', arc)
                     .attr('fill', (d, i) => color(i));
               
-                  // Ajout de labels de pourcentage
-                  arcs.append('text')
-                    .attr('transform', d => `translate(${arc.centroid(d)})`)
-                    .attr('text-anchor', 'middle')
-                    .text(d => `${d.data}%`);
-
+                 
 
 
 
@@ -301,8 +296,8 @@ const categoryColors = [
         <Link href="/income">
           <button>Income</button>
         </Link>
-        <Link href="/chart">
-          <button>Chart</button>
+        <Link href="/calendar">
+          <button>Calendar</button>
         </Link> 
         <Link href="/about">
           <button>About</button>

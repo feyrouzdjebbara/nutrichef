@@ -10,7 +10,7 @@
     }
     .header {
       background: linear-gradient(to bottom, #ab8b61 60%, #ffffff 40%);
-      height: 15%;
+      height: 90px;
       color: #fff;
       padding: 1rem;
       width: 100%;
