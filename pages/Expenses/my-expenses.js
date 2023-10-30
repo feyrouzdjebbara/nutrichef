@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import UpdateExpensePopup from "../../Components/UpdateExpensePopup";
 import ExpenseFilter from "../../Components/ExpenseFilter";
+import Footer from "../../Components/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -415,24 +416,7 @@ export default function Home() {
 
 
 
-      <footer className={styles.footer}>
-      <Link href="/Home">
-          <button>Home</button>
-        </Link>
-          <Link href="/Expenses/my-expenses">
-          <button>Expenses</button>
-        </Link>
-        <Link href="/income">
-          <button>Income</button>
-        </Link>
-        <Link href="/Calendar">
-          <button>Calendar</button>
-        </Link> 
-        <Link href="/about">
-          <button>About</button>
-        </Link> 
-     
-      </footer>
+     <Footer/>
     </div>
   );
 }
