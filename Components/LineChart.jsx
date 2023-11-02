@@ -18,11 +18,19 @@ const LineChart = ({ monthlyExpensesData }) => {
           data: dataValues,
           borderColor:  ' rgb(210, 0, 0)',
           backgroundColor: 'rgb(240, 0, 0)',
-          
+        
           borderWidth: 2,
           fill: false,
           
         },
+        {
+            label: 'Monthly Incomes',
+            borderColor:  ' rgb(87, 176, 87)',
+            backgroundColor: 'rgb(87, 176, 87)',
+            borderWidth: 2,
+            fill: false,
+            
+          },
       ],
     };
     
