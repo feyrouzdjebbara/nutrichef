@@ -1,29 +1,30 @@
 
 import styles from "../styles/home.module.css";
 import { useRouter } from 'next/router';
-import { useEffect ,useState} from "react"; 
-import jwt from 'jsonwebtoken'; 
+import { useEffect, useState } from "react";
+import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import PercentageChart from "../Components/PercentageChart";
 import Footer from "../Components/Footer";
-import { AllExpenses, categoryColors } from "../utils/data";
+import { AllExpenses} from "../utils/data";
 import Header from "../Components/Header";
+import LineChart from "../Components/LineChart";
 
 export default function Home() {
-    const router = useRouter();
-    const [expenses, setExpenses] = useState([]);
-   const [expensesSum, setExpensesSum] = useState(0); 
-   const [expensesMonth, setExpensesMonth] = useState(0); 
-   const [expensesYear, setExpensesYear] = useState(0); 
-   const [TotalYearExpenses, setTotalYearExpenses] = useState(0);
-   const [selectedOption, setSelectedOption] = useState('totalExpenses');
-   const [categoryData, setCategoryData] = useState({});
-   const [categoryPercentages, setcategoryPercentages] = useState([]);
+  const router = useRouter();
+  const [expenses, setExpenses] = useState([]);
+  const [expensesSum, setExpensesSum] = useState(0);
+  const [expensesMonth, setExpensesMonth] = useState(0);
+  const [expensesYear, setExpensesYear] = useState(0);
+  const [TotalYearExpenses, setTotalYearExpenses] = useState(0);
+  const [selectedOption, setSelectedOption] = useState('totalExpenses');
+  const [categoryData, setCategoryData] = useState({});
+  const [categoryPercentages, setcategoryPercentages] = useState([]);
+  const [yearsData, setYearsData] = useState({});
 
 
-  
 
-   const handleSelectChange = (e) => {
+  const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
   };
 
@@ -58,6 +59,8 @@ export default function Home() {
       })
       .then((response) => {
         const expensesYearData = response.data;
+        setYearsData(expensesYearData)
+       
         const totalYearExpenses = Object.values(expensesYearData).reduce(
           (total, monthExpense) => total + monthExpense,
           0
@@ -85,91 +88,75 @@ export default function Home() {
       const headers = {
         Authorization: `Bearer ${jwtToken}`,
       };
-      
+
       axios.get(`http://localhost:3333/expenses/my-expenses/${decodedToken.id}`, {
-          headers: headers,
-        })
+        headers: headers,
+      })
         .then((response) => {
           setExpenses(response.data);
-          
+
         })
         .catch((error) => {
           console.error('Error fetching expenses:', error);
         });
 
-        fetchAndUpdateExpensesData(jwtToken, decodedToken);
+      fetchAndUpdateExpensesData(jwtToken, decodedToken);
 
 
-        const totals = [];
-        for (const category of AllExpenses) {
-            axios.get(`http://localhost:3333/expenses/categories/${category}/users/${decodedToken.id}`, {
-              headers: headers,
-            })
-            .then((response) => {
-                if (response.data.totalAmount && response.data.totalAmount.length > 0) {
-                  const total = response.data.totalAmount[0].total;
-                  categoryData[category] = total;
-                  totals.push(total);
-                  console.log(`Total for ${category}:`, totals);
-   
-                  const totalSum = totals.reduce((sum, value) => sum + value, 0);
-                  setcategoryPercentages(AllExpenses.map(category => ((categoryData[category] / totalSum) * 100).toFixed(1)));
-               
-                } else {
-                  categoryData[category] = 0;
-                  totals.push(0);
-                  console.log(`Total for ${category} is 0`);
-                }
-          
-             
-                
-                 
-                  
-                
-              
-                 
+      const totals = [];
+      for (const category of AllExpenses) {
+        axios.get(`http://localhost:3333/expenses/categories/${category}/users/${decodedToken.id}`, {
+          headers: headers,
+        })
+          .then((response) => {
+            if (response.data.totalAmount && response.data.totalAmount.length > 0) {
+              const total = response.data.totalAmount[0].total;
+              categoryData[category] = total;
+              totals.push(total);
+              console.log(`Total for ${category}:`, totals);
 
+              const totalSum = totals.reduce((sum, value) => sum + value, 0);
+              setcategoryPercentages(AllExpenses.map(category => ((categoryData[category] / totalSum) * 100).toFixed(1)));
 
+            } else {
+              categoryData[category] = 0;
+              totals.push(0);
+              console.log(`Total for ${category} is 0`);
+            }
 
-
-
-
-
-                }
-
-              )
-            .catch((error) => {
-              console.error(`Error fetching expenses for ${category}:`, error);
-            });
           }
-    }
-   
-  }, [router]);
 
+          )
+          .catch((error) => {
+            console.error(`Error fetching expenses for ${category}:`, error);
+          });
+      }
+    }
+
+  }, [router]);
   
+
   return (
 
 
     <div className={styles.container}>
-  
-     <Header selectedOption={selectedOption}
-          handleSelectChange={handleSelectChange}
-          expensesSum={expensesSum}
-          expensesMonth={expensesMonth}
-          TotalYearExpenses={TotalYearExpenses}/>
+
+      <Header selectedOption={selectedOption}
+        handleSelectChange={handleSelectChange}
+        expensesSum={expensesSum}
+        expensesMonth={expensesMonth}
+        TotalYearExpenses={TotalYearExpenses} />
 
       <main className={styles.main}>
-   
-     
-      
-      <PercentageChart categoryPercentages={categoryPercentages} categoryData={categoryData} />
-      
+
+        <PercentageChart categoryPercentages={categoryPercentages} categoryData={categoryData} totalExpenses={expensesSum} />
+        <LineChart monthlyExpensesData={yearsData} />
       </main>
 
 
 
 
-    <Footer/>
+      <Footer />
     </div>
   );
 }

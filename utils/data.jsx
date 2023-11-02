@@ -16,3 +16,8 @@ export const categoryColors = [
     'rgba(153, 85, 51, 1)', 
     ];
     
+    export const monthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      ];
+      
