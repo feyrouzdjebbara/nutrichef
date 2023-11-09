@@ -2,6 +2,8 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import styles from '../styles/home.module.css';
 import { monthNames } from '../utils/data';
+// million-ignore
+
 const LineChart = ({ monthlyExpensesData }) => {
     
       const labels = Object.keys(monthlyExpensesData).map(monthNumber => {
@@ -9,7 +11,7 @@ const LineChart = ({ monthlyExpensesData }) => {
         return monthName;
       });
     const dataValues = Object.values(monthlyExpensesData);
-  console.log("dataValues",dataValues)
+  
     const data = {
       labels: labels,
       datasets: [

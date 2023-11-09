@@ -32,7 +32,7 @@ export default function Login() {
         email: email,
         password: password,
       });
-      console.log(response.status)
+    
 
      if(response.status === 201){
      const jwtToken = response.data.token;
@@ -41,7 +41,7 @@ export default function Login() {
      }
 
 
-      console.log('Response  :', response.data);
+   
       setEmail('');
       setPassword('');
         

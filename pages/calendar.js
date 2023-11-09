@@ -83,7 +83,7 @@ export default function calendar() {
     if (!jwtToken) {
       router.push('/login');
     } else {
-      console.log(decodedToken)
+      
       const headers = {
         Authorization: `Bearer ${jwtToken}`,
       };
@@ -116,8 +116,7 @@ export default function calendar() {
 
 
 
-  const formattedDate = format(date, 'MMMM dd, yyyy');
-  console.log(formattedDate);
+
   
   const handleDateChange = (newDate) => {
     setDate(newDate);

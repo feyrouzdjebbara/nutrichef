@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import PercentageChart from "../Components/PercentageChart";
-import Footer from "../Components/Footer";
+
 import { AllExpenses} from "../utils/data";
 import Header from "../Components/Header";
 import LineChart from "../Components/LineChart";
+import Footer from "../Components/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -84,7 +85,7 @@ export default function Home() {
     if (!jwtToken) {
       router.push('/login');
     } else {
-      console.log(decodedToken)
+      
       const headers = {
         Authorization: `Bearer ${jwtToken}`,
       };
@@ -113,7 +114,7 @@ export default function Home() {
               const total = response.data.totalAmount[0].total;
               categoryData[category] = total;
               totals.push(total);
-              console.log(`Total for ${category}:`, totals);
+            
 
               const totalSum = totals.reduce((sum, value) => sum + value, 0);
               setcategoryPercentages(AllExpenses.map(category => ((categoryData[category] / totalSum) * 100).toFixed(1)));
@@ -121,7 +122,7 @@ export default function Home() {
             } else {
               categoryData[category] = 0;
               totals.push(0);
-              console.log(`Total for ${category} is 0`);
+             
             }
 
           }

@@ -184,7 +184,7 @@ export default function Home() {
     if (!jwtToken) {
       router.push('/login');
     } else {
-      console.log(decodedToken)
+     
       const headers = {
         Authorization: `Bearer ${jwtToken}`,
       };
@@ -274,7 +274,7 @@ export default function Home() {
       );
   
       if (response.status === 200) {
-        console.log("total",response.data.totalAmount[0].total)
+       
         setCategorySum(response.data.totalAmount[0].total)
         //setFilteredExpenses(response.data.expenses);
         

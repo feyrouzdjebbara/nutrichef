@@ -50,8 +50,7 @@ export default  function signup() {
       const response = await axios.post('http://localhost:3333/auth/signup', userData);
 
      
-      console.log('Response from the API:', response.data);
-      console.log(response.status)
+     
       if(response.status === 201){
 
         router.push('/login'); 

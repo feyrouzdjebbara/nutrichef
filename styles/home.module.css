@@ -153,6 +153,12 @@
     font-weight: bold;
     color:#a78150
   }
+  .iconButton {
+   
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; 
+  }
   
    
   
