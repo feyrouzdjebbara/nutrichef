@@ -2,20 +2,17 @@ import React from 'react'
 import Header from '../Components/Header'
 import Footer from '../Components/Footer'
 import styles from "../styles/calendar.module.css";
-import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import Calendar from 'react-calendar';
-import { format } from 'date-fns';
+
 import 'react-calendar/dist/Calendar.css';
 
 export default function calendar() {
-  const router = useRouter();
-  const [expenses, setExpenses] = useState([]);
+ 
   const [expensesSum, setExpensesSum] = useState(0);
   const [expensesMonth, setExpensesMonth] = useState(0);
-  const [expensesYear, setExpensesYear] = useState(0);
   const [TotalYearExpenses, setTotalYearExpenses] = useState(0);
   const [selectedOption, setSelectedOption] = useState('totalExpenses');
   const [date, setDate] = useState(new Date());
@@ -79,31 +76,10 @@ export default function calendar() {
   useEffect(() => {
     const jwtToken = localStorage.getItem('OursiteJWT');
     const decodedToken = jwt.decode(jwtToken);
-
-    if (!jwtToken) {
-      router.push('/login');
-    } else {
-      
-      const headers = {
-        Authorization: `Bearer ${jwtToken}`,
-      };
-
-      axios.get(`http://localhost:3333/expenses/my-expenses/${decodedToken.id}`, {
-        headers: headers,
-      })
-        .then((response) => {
-          setExpenses(response.data);
-
-        })
-        .catch((error) => {
-          console.error('Error fetching expenses:', error);
-        });
-
       fetchAndUpdateExpensesData(jwtToken, decodedToken);
 
-    }
 
-  }, [router]);
+  }, []);
 
 
 
@@ -127,12 +103,6 @@ export default function calendar() {
   };
 
 
-  const tileClassName = ({ date, view }) => {
-    if (clickedDate && date.getDate() === clickedDate.getDate()) {
-      return styles.clickedDay; 
-    }
-    return null;
-  };
   
 
   function getDataForDate(selectedDate) {

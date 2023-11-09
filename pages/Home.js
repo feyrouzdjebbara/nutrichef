@@ -12,11 +12,9 @@ import LineChart from "../Components/LineChart";
 import Footer from "../Components/Footer";
 
 export default function Home() {
-  const router = useRouter();
-  const [expenses, setExpenses] = useState([]);
+  
   const [expensesSum, setExpensesSum] = useState(0);
   const [expensesMonth, setExpensesMonth] = useState(0);
-  const [expensesYear, setExpensesYear] = useState(0);
   const [TotalYearExpenses, setTotalYearExpenses] = useState(0);
   const [selectedOption, setSelectedOption] = useState('totalExpenses');
   const [categoryData, setCategoryData] = useState({});
@@ -66,7 +64,7 @@ export default function Home() {
           (total, monthExpense) => total + monthExpense,
           0
         );
-        setExpensesYear(expensesYearData);
+        
         setTotalYearExpenses(totalYearExpenses);
       })
       .catch((error) => {
@@ -82,25 +80,10 @@ export default function Home() {
     const jwtToken = localStorage.getItem('OursiteJWT');
     const decodedToken = jwt.decode(jwtToken);
 
-    if (!jwtToken) {
-      router.push('/login');
-    } else {
       
       const headers = {
         Authorization: `Bearer ${jwtToken}`,
       };
-
-      axios.get(`http://localhost:3333/expenses/my-expenses/${decodedToken.id}`, {
-        headers: headers,
-      })
-        .then((response) => {
-          setExpenses(response.data);
-
-        })
-        .catch((error) => {
-          console.error('Error fetching expenses:', error);
-        });
-
       fetchAndUpdateExpensesData(jwtToken, decodedToken);
 
 
@@ -132,9 +115,9 @@ export default function Home() {
             console.error(`Error fetching expenses for ${category}:`, error);
           });
       }
-    }
+    
 
-  }, [router]);
+  }, []);
   
 
   return (
