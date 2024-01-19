@@ -8,15 +8,20 @@ export default function Home() {
       <Head>
         <title>NutriChef</title>
         <link rel="icon" href="/favicon.ico" />
+        
       </Head>
 
      <main>
     <div >
+    
      <h1>NutriChef</h1>
    
       </div>
    <Link href="/login">
-    <button>login</button>
+    <button>Login</button>
+   </Link>
+   <Link href="/signup">
+    <button>Sign Up</button>
    </Link>
     </main>
 </>

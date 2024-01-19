@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { auth } from '../firebase/firebase'; 
 import { useRouter } from 'next/router'; 
 import { signInWithEmailAndPassword } from "firebase/auth";
+import Link from 'next/link';
 
 
 const Login = () => {
@@ -41,6 +42,11 @@ const Login = () => {
 
   return (
     <div>
+    <div>
+    <Link href="/">
+    <button>Home</button>
+   </Link>
+    </div>
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <label>Email:</label>
@@ -52,6 +58,8 @@ const Login = () => {
         <button type="submit">Login</button>
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       </form>
+      <Link href="signup">sign up</Link>
+    
     </div>
   );
 };
