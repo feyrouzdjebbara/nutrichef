@@ -1,32 +1,23 @@
 import Head from 'next/head'
-import styles from "../styles/form.module.css";
-import Image from 'next/image'
+import Food from './Food'
 import Link from 'next/link'
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Expenses Tracker</title>
+        <title>NutriChef</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
      <main>
-    <div className={styles.homecontainer}>
-     <img src="/img/home.svg" alt="Home Illustration" width="400" height="400" />
-
-      <h1 className={styles.greeting}>Your Finances in One Palce!</h1>
-      <div className={styles.buttoncontainer}>
-      <Link href="/login">
-          <button className={styles.loginbutton}>Log In</button>
-        </Link>
-        <br/>
-        <Link href="/signup">
-          <button className={styles.signupbutton} >Sign Up</button>
-        </Link>
-       
+    <div >
+     <h1>NutriChef</h1>
+   
       </div>
-    </div>
+   <Link href="/login">
+    <button>login</button>
+   </Link>
     </main>
 </>
   
