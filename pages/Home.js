@@ -1,35 +1,31 @@
-
-import React from 'react'
-import Food from './Food'
+import React, { useEffect, useState } from 'react';
+import Food from './Food';
 import { useRouter } from 'next/router';
-const router = useRouter();
 
-function home() {
+function Home() {
+  const router = useRouter();
+  const [user, setUser] = useState();
 
-    useEffect(() => {
-       
-        if (typeof window !== 'undefined') {
-          const user = localStorage.getItem('userId');
-    
-          if (!user) {
-            router.push('/login');
-          }
-        }
-      }, [router]);
-        
-  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('userId');
+      setUser((prevUser) => prevUser || storedUser);
+
+      if (!user && !storedUser) {
+        router.push('/login');
+      }
+    }
+  }, [user, router]);
 
   return (
     <>
-    
-    <div >
-     <h1>NutriChef</h1>
-     <Food></Food>
-     <h2>{user}</h2>
+      <div>
+        <h1>NutriChef</h1>
+        <Food />
+        <h2>{user}</h2>
       </div>
-  
-</>
-  )
+    </>
+  );
 }
 
-export default home
+export default Home;
