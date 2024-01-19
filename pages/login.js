@@ -24,7 +24,7 @@ const Login = () => {
   
 
       localStorage.setItem('userId', user.uid);
-      router.push('/home');
+      router.push('/Home');
 
     } catch (error) {
       console.error('Error logging in:', error.message);
