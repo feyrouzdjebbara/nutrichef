@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Food from './Food';
 import { useRouter } from 'next/router';
 
-function Home() {
+function home() {
   const router = useRouter();
   const [user, setUser] = useState();
 
@@ -28,4 +28,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default home;
