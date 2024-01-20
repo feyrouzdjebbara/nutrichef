@@ -7,7 +7,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 
-function Home() {
+function NutriTest() {
   const router = useRouter();
   const [user, setUser] = useState();
   const [userInfo, setUserInfo] = useState(null);
@@ -69,7 +69,9 @@ function Home() {
         <main className={styles.main}>
 
          
-
+        
+          <Food />
+          
 
         </main>
 
@@ -81,4 +83,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default NutriTest;
