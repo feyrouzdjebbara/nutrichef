@@ -3,6 +3,8 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    margin-bottom: 15px;
+    background-color: #fff;
   }
   
   /* Style for table headers */
@@ -28,23 +30,26 @@
   }
   
   .verticalBlock {
-    width: 200px; /* Adjust the width as needed */
-    background-color: #75cb40;
+   
+    background-color:#fff ;
     border-radius: 10px;
     padding: 20px;
-    color: #fff;
+    color:#75cb40 ;
   }
   /* Add this to your food.module.css file */
 .nutritionTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    font-size: 14px;
+    
   }
   
   .nutritionTable th, .nutritionTable td {
     border: 1px solid #dddddd;
     padding: 8px;
     text-align: left;
+    color:#000000 ;
   }
   
   .nutritionTable th {

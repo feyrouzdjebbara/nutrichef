@@ -3,6 +3,7 @@ import styles from "../styles/food.module.css";
 import IngredientsTable from './IngredientsTable';
 import RecipeValue from './RecipeValue';
 
+
 const API_ID = 'e650a326';
 const API_KEY = 'b228c94c157228910f4ef25503d303a3';
 
