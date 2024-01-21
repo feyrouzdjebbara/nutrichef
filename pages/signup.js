@@ -20,6 +20,7 @@ const SignUp = () => {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [activityLevel, setActivityLevel] = useState('');
+    const [errorMessage ,setErrorMessage]=useState('')
  
   const router = useRouter();
 
@@ -41,14 +42,16 @@ const SignUp = () => {
                 weight,
                 activityLevel
               });
+              router.push('/login');
               if (userData.password !==userData.confirmPassword){
                 setpasswordsNotMatch(true)
+                setErrorMessage("Password don't match!");
                 return;}
 
         
-      router.push('/login');
+     
     } catch (error) {
-        console.error('Error signing up:', error.message, error.code);
+        console.error('Error signing up:', error.message);
         
        
         if (error.code === 'auth/email-already-in-use') {
@@ -173,7 +176,9 @@ const SignUp = () => {
         /><br />
         
         <div className={styles.errormessage} >{passwordsNotMatch && <p >Password don't match</p>}</div>
-
+        <br />
+                <div className={styles.errormessage} >{errorMessage && <p>{errorMessage}</p>}</div>
+              <br />
         <button
           type="submit"
           className={styles.subbutton}
