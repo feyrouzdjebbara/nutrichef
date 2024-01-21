@@ -87,7 +87,7 @@ function Food() {
 
 
 
-      setError('Error fetching nutrition information. Please try again.');
+      setError(error,' Please try again.');
     }
   };
 
