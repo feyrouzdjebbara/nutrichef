@@ -10,7 +10,7 @@ const API_KEY = 'b228c94c157228910f4ef25503d303a3';
 function Food() {
   const [ingredient, setIngredient] = useState('');
   const [nutritionInfo, setNutritionInfo] = useState(null);
-  const [error, setError] = useState(null);
+  const [errors, setError] = useState(null);
   const [ingredientsArray, setIngredientsArray] = useState([]);
   const [totalCalories, settotalCalories] = useState(0)
   const [Carbohydrates, settotalCarbohydrates] = useState(0)
@@ -18,7 +18,17 @@ function Food() {
   const [Protein, settotalProtein] = useState(0)
   const [totalWeight, settotalWeight] = useState(0)
   const [totalCholesterol, setCholesterol] = useState(0)
-  
+
+  const [Sodium, setSodium] = useState(0)
+  const [Calcium, setCalcium] = useState(0)
+  const [Magnesium, setMagnesium] = useState(0)
+  const [Potassium, setPotassium] = useState(0)
+  const [Iron, setIron] = useState(0)
+  const [Zinc, setZinc] = useState(0)
+  const [VitaminC, setVitaminC] = useState(0)
+  const [VitaminD, setVitaminD] = useState(0)
+ 
+
   const handleNutritionAnalysis = async (e) => {
     e.preventDefault();
 
@@ -30,6 +40,8 @@ function Food() {
         const response = await fetch(`https://api.edamam.com/api/nutrition-data?app_id=${API_ID}&app_key=${API_KEY}&ingr=${ingredient}`);
 
         if (!response.ok) {
+          err=response;
+          setError(err);
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
@@ -79,15 +91,66 @@ function Food() {
       : 0;
       setCholesterol(newCholesterol)
 
+
+      const newSodium = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.NA.quantity, 0)
+      : 0;
+      setSodium(newSodium)
+
+      const newCalcium = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.CA.quantity, 0)
+      : 0;
+      setCalcium(newCalcium)
+      
+      const newMagnesium = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.MG.quantity, 0)
+      : 0;
+      setMagnesium(newMagnesium)
+
+      const newPotassium = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.K.quantity, 0)
+      : 0;
+      setPotassium(newPotassium)
+
+      const newIron = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.FE.quantity, 0)
+      : 0;
+      setIron(newIron)
+      
+      const newZinc = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.ZN.quantity, 0)
+      : 0;
+      setZinc(newZinc)
+
+      const newVitaminC = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.VITC.quantity, 0)
+      : 0;
+      setVitaminC(newVitaminC)
+
+      const newVitaminD = data
+      ? data.reduce((sum, info) => sum + info.totalNutrients.VITD.quantity, 0)
+      : 0;
+      setVitaminD(newVitaminD)
      
     } catch (error) {
       console.error('Error fetching data:', error);
       setNutritionInfo(null);
       setIngredientsArray([]);
+      const errr= error.message;
+      if(errr.includes("CHOCDF")){
+        setError("Please enter valid elements with there quantities ")
+        console.log("Please enter the elements quantity.");
+      }
+      else{
+        setError(error.message)
+        console.log(error);
+      }
+       
+      
+      
+      
 
-
-
-      setError(error,' Please try again.');
+     // setError(error,' Please try again.');
     }
   };
 
@@ -114,7 +177,7 @@ function Food() {
           </form>
 
           <IngredientsTable
-            error={error}
+            error={errors}
             nutritionInfo={nutritionInfo}
             ingredientsArray={ingredientsArray}
           />
@@ -122,6 +185,8 @@ function Food() {
 
 
         </div>
+        {nutritionInfo && 
+        
         <RecipeValue
           totalCalories={totalCalories}
           Carbohydrates={Carbohydrates}
@@ -129,7 +194,17 @@ function Food() {
           Fat={Fat}
           totalWeight={totalWeight}
           totalCholesterol={totalCholesterol}
+          Sodium={Sodium}
+          Calcium={Calcium}
+          Magnesium={Magnesium}
+          Potassium={Potassium}
+          Iron={Iron}
+          Zinc={Zinc}
+          VitaminC={VitaminC}
+          VitaminD={VitaminD}
+
         />
+        }
       </div>
     </>
   );
