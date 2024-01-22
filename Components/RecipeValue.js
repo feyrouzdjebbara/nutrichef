@@ -74,7 +74,7 @@ function RecipeValue({ totalCalories, Carbohydrates,
                         </tr>
                         <tr>
                             <td>Vitamin D (D2 + D3)</td>
-                            <td>{VitaminD.toFixed(1)} mg</td>
+                            <td>{VitaminD.toFixed(1)} µg</td>
                         </tr>
                         <tr>
                             <td>Total Weight</td>

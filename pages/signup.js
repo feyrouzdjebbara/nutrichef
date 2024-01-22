@@ -116,7 +116,7 @@ const SignUp = () => {
         type="number" 
         value={height} 
         onChange={(e) => setHeight(e.target.value)} 
-        placeholder="Height"
+        placeholder="Height (CM)"
           className={styles.inputstyle}
           minLength={2}
         required />
@@ -126,7 +126,7 @@ const SignUp = () => {
         type="number" 
         value={weight} 
         onChange={(e) => setWeight(e.target.value)} 
-        placeholder="Current Weight"
+        placeholder="Current Weight (KG)"
           className={styles.inputstyle}
           minLength={2}
         required />
