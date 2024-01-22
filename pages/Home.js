@@ -6,6 +6,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import axios from 'axios';
+import BmiCalculator from '../Components/BmiCalculator';
 
 function Home() {
   const router = useRouter();
@@ -21,8 +22,7 @@ function Home() {
   const [YourHealthCase, setYourHealthCase] = useState();
   const [goal1, setgoal1] = useState();
   const [calorieNedded, setcalorieNedded] = useState();
-
-
+ 
   const getUserInfo = async (userId) => {
     try {
       const q = query(collection(db, 'usersInfo'), where('userId', '==', userId));
@@ -44,6 +44,7 @@ function Home() {
   };
 
   useEffect(() => {
+   
     const fetchData = async () => {
       if (typeof window !== 'undefined') {
         const storedUser = localStorage.getItem('userId');
@@ -73,10 +74,14 @@ function Home() {
         }
       }
     };
-    fetchData();
+  
+      fetchData();
+   
+  
+    // Clear the timeout when the component unmounts or when you want to stop it
+   
 
-  }, []);
-
+  }, [userInfo]);
 
 
   useEffect(() => {
@@ -144,12 +149,12 @@ function Home() {
         console.log(resultObject);
         
         if(goal1 === "maintain weight"){
-          const c=bmrData.data.goals["maintain weight"]
+          const c=resultObject.data.goals["maintain weight"]
           console.log("goal1",goal1);
           console.log("c",c);
           setcalorieNedded(c);
         }else{
-          const c=bmrData.data.goals[goal1].calory;
+          const c=resultObject.data.goals[goal1].calory;
           console.log("goal1",goal1);
           console.log("c",c);
           setcalorieNedded(c);
@@ -169,7 +174,7 @@ function Home() {
     };
 
     fetchData();
-  }, [userInfo]);
+  }, []);
 
 
   const handleLogout = async () => {
@@ -203,17 +208,11 @@ function Home() {
               <h3> your gender is: {userInfo.gender}</h3>
             </div>}
 
-          {bmi1 &&
-            <div>
-              <h3>BMI: {bmi1.data.bmi}</h3>
-              
-              <h3>Healthy BMI Range: {bmi1.data.healthy_bmi_range}</h3>
-              <h3>You are in: {bmi1.data.health}</h3>
-              <h3>Your goal is to {goal1} </h3>
-              <h3>You need {calorieNedded} calories per day</h3>
-
-            </div>
-          }
+         <BmiCalculator 
+          bmi1={bmi1}
+          goal1={goal1}
+          calorieNedded={calorieNedded}
+         />
 
 
 
