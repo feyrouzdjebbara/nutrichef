@@ -12,7 +12,7 @@ function Home() {
   const router = useRouter();
   const [user, setUser] = useState();
   const [userInfo, setUserInfo] = useState();
-  const [gender, setgender] = useState("male");
+  const [gender, setgender] = useState("");
   const [height, setheight] = useState(130);
   const [weight, setweight] = useState(40);
   const [age, setage] = useState(10);
@@ -70,27 +70,8 @@ function Home() {
 
 
             }
-          }
-        }
-      }
-    };
-  
-      fetchData();
-   
-  
-    // Clear the timeout when the component unmounts or when you want to stop it
-   
 
-  }, [userInfo]);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-
-      console.log(gender)
-
-
-      //BMI
+                //BMI
 
       const url2 = `https://fitness-calculator.p.rapidapi.com/bmi?age=${age}&weight=${weight}&height=${height}`;
       const options2 = {
@@ -127,8 +108,10 @@ function Home() {
       } catch (error) {
         console.error(error);
       }
+   
 
       //
+     
       const url = `https://fitness-calculator.p.rapidapi.com/dailycalorie?age=${age}&gender=${gender}&height=${height}&weight=${weight}&activitylevel=${level}`;
       const options = {
         method: 'GET',
@@ -164,6 +147,9 @@ function Home() {
         console.error(error);
       }
 
+      
+          }
+        
 
 
 
@@ -171,10 +157,19 @@ function Home() {
 
 
 
+   
+        }
+      }
     };
+  
+      fetchData();
+   
+  
 
-    fetchData();
-  }, []);
+  }, [userInfo]);
+
+
+ 
 
 
   const handleLogout = async () => {
