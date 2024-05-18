@@ -48,7 +48,7 @@ function UserInfo({ userInfo, user, getUserInfo, setUser }) {
         <>
         <div className={styles.userInfo}>
   <h3 className={styles.title}>Hello, {userInfo.username}</h3>
-  <table className={styles.userInfo}>
+  {/* <table className={styles.userInfo}>
     <tbody >
       <tr>
         <th>Your weight:</th>
@@ -67,7 +67,7 @@ function UserInfo({ userInfo, user, getUserInfo, setUser }) {
         <td>{userInfo.gender}</td>
       </tr>
     </tbody>
-  </table>
+  </table> */}
 
 
            <BmiCalculator
