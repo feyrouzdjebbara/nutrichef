@@ -6,12 +6,10 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import UserInfo from '../Components/UserInfo';
-import Link from 'next/link';
 
 
-function Home() {
-  const router = useRouter();
-  const [user, setUser] = useState();
+function Profile() {
+ 
   const [userInfo, setUserInfo] = useState();
 
 
@@ -41,7 +39,7 @@ function Home() {
   };
 
 
-
+  
   const handleLogout = async () => {
     try {
       await auth.signOut();
@@ -61,7 +59,7 @@ function Home() {
     <>
       <div className={styles.container}>
 
-        <Header
+      <Header
           userInfo={userInfo}
           handleLogout={handleLogout}
           handleProfile={handleProfile}
@@ -69,30 +67,19 @@ function Home() {
 
         <main className={styles.main}>
 
-
-
-
-          <UserInfo
-            userInfo={userInfo}
-            user={user}
-            getUserInfo={getUserInfo}
-            setUser={setUser}
-          />
-
-
-
-
-
-
-
         </main>
 
 
 
         <Footer />
       </div>
+
+
+
+
+     
     </>
   );
 }
 
-export default Home;
+export default Profile
