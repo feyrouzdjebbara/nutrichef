@@ -18,7 +18,7 @@ export default function Footer() {
         <div>NutriTest</div>
       </button>
     </Link>
-    <Link href="/Recepies">
+    <Link href="/recipes">
   <button className={styles.iconButton}>
     <div><FaUtensils /></div>
     <div>Recipes</div>

@@ -40,7 +40,7 @@ function UserInfo({ userInfo, user, getUserInfo, setUser }) {
 
 
     fetchData();
-  }, [userInfo, user, getUserInfo, setUser]);
+  }, [userInfo]);
 
   return (
     <>
