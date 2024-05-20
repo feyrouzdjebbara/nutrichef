@@ -8,7 +8,8 @@ export default function Home() {
       <Head>
         <title>NutriChef</title>
         <link rel="icon" href="/favicon.ico" />
-        
+        <meta property="og:image" content="/img/foodPlate.png" />
+        <meta property="og:title" content="NutriChef" />
       </Head>
 
       <main>

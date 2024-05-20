@@ -11,7 +11,7 @@
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: 300px;
+    
   }
   
   .button {
@@ -37,7 +37,7 @@
   }
   
   .card {
-    background-color: #fff;
+  
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -45,10 +45,15 @@
     text-align: center;
     transition: transform 0.2s;
     cursor: pointer;
+    border: 1px solid #a2de99;
+    
+    background-color: hsl(88, 76%, 87%);
   }
   
   .card:hover {
     transform: scale(1.05);
+    background-color: #fff;
+    
   }
   
   .image {
@@ -60,6 +65,10 @@
     padding: 10px;
     color: #333;
     font-family: Arial, sans-serif;
+    
+  text-decoration: none; 
+  font-weight: bold;
+  color:#75cb40
   }
   
   .popupOverlay {
@@ -88,6 +97,9 @@
     max-height: 90vh;
     overflow-y: auto;
      max-height: 100%;
+     text-decoration: none; 
+     font-weight: bold;
+     
   
   }
   

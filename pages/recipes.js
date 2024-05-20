@@ -143,9 +143,9 @@ function recipes() {
         <div className={styles.popupOverlay} onClick={handleClosePopup}>
           <div className={styles.popupContent} onClick={(e) => e.stopPropagation()}>
             <button className={styles.closeButton} onClick={handleClosePopup}>×</button>
-            <h2>{selectedMeal.strMeal}</h2>
+            <h2 className={styles.title}>{selectedMeal.strMeal}</h2>
             <img src={selectedMeal.strMealThumb} alt={selectedMeal.strMeal} className={styles.popupImage} />
-            <h3>Ingredients</h3>
+            <h3 className={styles.title}>Ingredients</h3>
             <ul className={styles.ingredients}>
               {Array.from({ length: 20 }, (_, i) => i + 1)
                 .map(i => {
@@ -156,7 +156,7 @@ function recipes() {
                   ) : null;
                 })}
             </ul>
-            <h3>Instructions</h3>
+            <h3 className={styles.title}>Instructions</h3>
             <p>{selectedMeal.strInstructions}</p>
           </div>
         </div>

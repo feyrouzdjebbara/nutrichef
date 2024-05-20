@@ -24,12 +24,7 @@ export default function Footer() {
     <div>Recipes</div>
   </button>
 </Link>
-    <Link href="/calendar">
-      <button className={styles.iconButton}>
-        <div><FaCalendar /></div>
-        <div>Calendar</div>
-      </button>
-    </Link>
+   
     <Link href="/about">
       <button className={styles.iconButton}>
         <div><FaInfo /></div>
